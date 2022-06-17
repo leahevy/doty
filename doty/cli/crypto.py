@@ -15,27 +15,158 @@
 
 """This module contains the functions for encryption in the CLI."""
 
+import os
+import sys
+
 import typer
 from rich import print
 
 import doty.lib
+from doty.cli.cli import command, update_state, version_callback
+from doty.log import LogLevel
 
 crypto_app = typer.Typer()
 file_app = typer.Typer()
 crypto_app.add_typer(file_app, name="file")
 
 
-@file_app.command()
-def encrypt() -> None:
+@command(file_app)
+def encrypt(
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    log_level: LogLevel = typer.Option(
+        LogLevel.info,
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
     """
     Encrypts a file.
     """
-    print("encryptfile")
+    options = dict(dry_run=dry_run, log_level=log_level)
+    raise NotImplementedError(
+        f"encryptfile not implemented yet, options: {options}"
+    )
 
 
-@file_app.command()
-def decrypt() -> None:
+@command(file_app)
+def decrypt(
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    log_level: LogLevel = typer.Option(
+        LogLevel.info,
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
     """
     Decrypts a file.
     """
-    print("decryptfile")
+    options = dict(dry_run=dry_run, log_level=log_level)
+    raise NotImplementedError(
+        f"decryptfile not implemented yet, options: {options}"
+    )
+
+
+@file_app.callback(invoke_without_command=True)
+def file_callback(
+    ctx: typer.Context,
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    log_level: LogLevel = typer.Option(
+        LogLevel.info,
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
+    update_state(verbose=verbose, dry_run=dry_run, log_level=log_level)
+    if ctx.invoked_subcommand is None:
+        os.execv(sys.argv[0], sys.argv + ["--help"])
+
+
+@crypto_app.callback(invoke_without_command=True)
+def crypto_callback(
+    ctx: typer.Context,
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    log_level: LogLevel = typer.Option(
+        LogLevel.info,
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
+    update_state(verbose=verbose, dry_run=dry_run, log_level=log_level)
+    if ctx.invoked_subcommand is None:
+        os.execv(sys.argv[0], sys.argv + ["--help"])
