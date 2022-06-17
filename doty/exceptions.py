@@ -53,3 +53,9 @@ class DotyLibException(DotyException):
     def __post_init__(self) -> None:
         super().__post_init__()
         self.type = "Library"
+
+
+class DotyConfigException(DotyException):
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        self.type = "Config"
