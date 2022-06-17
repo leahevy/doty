@@ -2,6 +2,11 @@ Changelog
 =========
 
 
+v0.7.0 (2022-06-17)
+-------------------
+- Fix documentation link. [Leah Lackner]
+
+
 v0.6.0 (2022-06-17)
 -------------------
 - Add note to readme about development. [Leah Lackner]
