@@ -17,13 +17,17 @@ import doty.log as log
 from doty.exceptions import DotyNotImplementedException
 
 
-def populate(dry_run: bool = False) -> None:
+def populate(dry_run: bool = False, config_file: str | None = None) -> None:
     log.fatal(
         DotyNotImplementedException,
         "populate not implemented yet",
-        data={"dry_run": dry_run},
+        data={"dry_run": dry_run, "config_file": config_file},
     )
 
 
-def health() -> None:
-    log.fatal(DotyNotImplementedException, "health not implemented yet")
+def health(config_file: str | None = None) -> None:
+    log.fatal(
+        DotyNotImplementedException,
+        "health not implemented yet",
+        data={"config_file": config_file},
+    )

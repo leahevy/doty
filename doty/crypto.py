@@ -17,17 +17,21 @@ import doty.log as log
 from doty.exceptions import DotyNotImplementedException
 
 
-def encryptfiles(*files: str, dry_run: bool = False) -> None:
+def encryptfiles(
+    *files: str, dry_run: bool = False, config_file: str | None = None
+) -> None:
     log.fatal(
         DotyNotImplementedException,
         "encryptfile not implemented yet",
-        data={"files": files, "dry_run": dry_run},
+        data={"files": files, "dry_run": dry_run, "config_file": config_file},
     )
 
 
-def decryptfiles(*files: str, dry_run: bool = False) -> None:
+def decryptfiles(
+    *files: str, dry_run: bool = False, config_file: str | None = None
+) -> None:
     log.fatal(
         DotyNotImplementedException,
         "decryptfile not implemented yet",
-        data={"files": files, "dry_run": dry_run},
+        data={"files": files, "dry_run": dry_run, "config_file": config_file},
     )

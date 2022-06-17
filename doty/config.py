@@ -17,5 +17,9 @@ import doty.log as log
 from doty.exceptions import DotyConfigException, DotyNotImplementedException
 
 
-def show() -> None:
-    log.fatal(DotyNotImplementedException, "show not implemented yet")
+def show(config_file: str | None = None) -> None:
+    log.fatal(
+        DotyNotImplementedException,
+        "show not implemented yet",
+        data={"config_file": config_file},
+    )

@@ -20,7 +20,6 @@ from enum import Enum
 from typing import Any, Type
 
 from rich import print
-from rich.text import Text
 
 
 class LogLevel(str, Enum):

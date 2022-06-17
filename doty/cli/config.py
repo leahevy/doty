@@ -37,6 +37,12 @@ def show(
         callback=version_callback,
         is_eager=True,
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -52,7 +58,7 @@ def show(
     """
     Encrypts a file.
     """
-    config.show()
+    config.show(config_file=config_file)
 
 
 @config_app.callback(invoke_without_command=True)
@@ -72,6 +78,12 @@ def file_callback(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -84,6 +96,11 @@ def file_callback(
         help="Prints debug output.",
     ),
 ) -> None:
-    update_state(verbose=verbose, dry_run=dry_run, log_level=log_level)
+    update_state(
+        verbose=verbose,
+        dry_run=dry_run,
+        log_level=log_level,
+        config_file=config_file,
+    )
     if ctx.invoked_subcommand is None:
-        os.execv(sys.argv[0], [sys.argv[0], show.__name__] + sys.argv[1:])
+        os.execv(sys.argv[0], sys.argv + [show.__name__])

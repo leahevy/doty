@@ -61,6 +61,12 @@ def health(
         "--log-level",
         help="Sets the log level.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     verbose: bool = typer.Option(
         False,
         "-V",
@@ -71,7 +77,7 @@ def health(
     """
     Checks if everything is set-up correctly and all required programs are available.
     """
-    core.health()
+    core.health(config_file=config_file)
 
 
 @command(app)
@@ -90,6 +96,12 @@ def populate(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -102,7 +114,7 @@ def populate(
         help="Prints debug output.",
     ),
 ) -> None:
-    core.populate(dry_run)
+    core.populate(dry_run=dry_run, config_file=config_file)
 
 
 @app.callback(invoke_without_command=True)
@@ -122,6 +134,12 @@ def main_callback(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -134,7 +152,12 @@ def main_callback(
         help="Prints debug output.",
     ),
 ) -> None:
-    update_state(verbose=verbose, dry_run=dry_run, log_level=log_level)
+    update_state(
+        verbose=verbose,
+        dry_run=dry_run,
+        log_level=log_level,
+        config_file=config_file,
+    )
     if ctx.invoked_subcommand is None:
         os.execv(sys.argv[0], [sys.argv[0], populate.__name__] + sys.argv[1:])
 

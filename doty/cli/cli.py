@@ -28,6 +28,7 @@ state: dict[str, Any] = {
     "verbose": False,
     "dry_run": False,
     "log_level": LogLevel.info,
+    "config_file": None,
 }
 
 
@@ -35,6 +36,7 @@ def update_state(
     verbose: bool | None = None,
     dry_run: bool | None = None,
     log_level: LogLevel | None = None,
+    config_file: str | None = None,
 ) -> None:
     if verbose:
         log_level = LogLevel.debug
@@ -44,6 +46,8 @@ def update_state(
         set_log_level(log_level)
     if dry_run is not None:
         state["dry_run"] = dry_run
+    if config_file is not None:
+        state["config_file"] = config_file
 
 
 from typing import Callable, TypeVar
@@ -61,6 +65,7 @@ def command(
             verbose: bool | None = None,
             version: bool | None = None,
             log_level: LogLevel | None = None,
+            config_file: str | None = None,
             dry_run: bool | None = None,
             **kwargs: dict[str, Any],
         ) -> RT:
@@ -68,12 +73,15 @@ def command(
                 verbose=verbose,
                 dry_run=dry_run,
                 log_level=log_level,
+                config_file=config_file,
             )
             argsnames = f.__code__.co_varnames
             if "dry_run" in argsnames:
                 kwargs["dry_run"] = state["dry_run"]
             if "log_level" in argsnames:
                 kwargs["log_level"] = state["log_level"]
+            if "config_file" in argsnames:
+                kwargs["config_file"] = state["config_file"]
             return f(
                 *args,
                 **kwargs,

@@ -46,6 +46,12 @@ def encrypt(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -61,7 +67,7 @@ def encrypt(
     """
     Encrypts a file.
     """
-    crypto.encryptfiles(*files, dry_run=dry_run)
+    crypto.encryptfiles(*files, dry_run=dry_run, config_file=config_file)
 
 
 @command(file_app)
@@ -81,6 +87,12 @@ def decrypt(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -96,7 +108,7 @@ def decrypt(
     """
     Decrypts a file.
     """
-    crypto.decryptfiles(*files, dry_run=dry_run)
+    crypto.decryptfiles(*files, dry_run=dry_run, config_file=config_file)
 
 
 @file_app.callback(invoke_without_command=True)
@@ -116,6 +128,12 @@ def file_callback(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -128,7 +146,12 @@ def file_callback(
         help="Prints debug output.",
     ),
 ) -> None:
-    update_state(verbose=verbose, dry_run=dry_run, log_level=log_level)
+    update_state(
+        verbose=verbose,
+        dry_run=dry_run,
+        log_level=log_level,
+        config_file=config_file,
+    )
     if ctx.invoked_subcommand is None:
         os.execv(sys.argv[0], sys.argv + ["--help"])
 
@@ -150,6 +173,12 @@ def crypto_callback(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",
@@ -162,6 +191,11 @@ def crypto_callback(
         help="Prints debug output.",
     ),
 ) -> None:
-    update_state(verbose=verbose, dry_run=dry_run, log_level=log_level)
+    update_state(
+        verbose=verbose,
+        dry_run=dry_run,
+        log_level=log_level,
+        config_file=config_file,
+    )
     if ctx.invoked_subcommand is None:
         os.execv(sys.argv[0], sys.argv + ["--help"])
