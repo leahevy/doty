@@ -40,16 +40,16 @@ class DotyException(Exception):
 class DotyNotImplementedException(DotyException, NotImplementedError):
     def __post_init__(self) -> None:
         super().__post_init__()
-        self.type = "not implemented"
+        self.type = "Not implemented"
 
 
 class DotyCliException(DotyException):
     def __post_init__(self) -> None:
         super().__post_init__()
-        self.type = "cli"
+        self.type = "Cli"
 
 
 class DotyLibException(DotyException):
     def __post_init__(self) -> None:
         super().__post_init__()
-        self.type = "library"
+        self.type = "Library"

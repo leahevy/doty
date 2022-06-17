@@ -29,17 +29,17 @@ def health() -> None:
     log.fatal(DotyNotImplementedException, "health not implemented yet")
 
 
-def encryptfile(dry_run: bool = False) -> None:
+def encryptfiles(*files: str, dry_run: bool = False) -> None:
     log.fatal(
         DotyNotImplementedException,
         "encryptfile not implemented yet",
-        data={"dry_run": dry_run},
+        data={"files": files, "dry_run": dry_run},
     )
 
 
-def decryptfile(dry_run: bool = False) -> None:
+def decryptfiles(*files: str, dry_run: bool = False) -> None:
     log.fatal(
         DotyNotImplementedException,
         "decryptfile not implemented yet",
-        data={"dry_run": dry_run},
+        data={"files": files, "dry_run": dry_run},
     )

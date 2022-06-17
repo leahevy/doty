@@ -19,12 +19,10 @@ import os
 import sys
 
 import typer
-from rich import print
 
 import doty.lib as lib
 from doty.cli.cli import command, update_state, version_callback
-from doty.exceptions import DotyNotImplementedException
-from doty.log import LogLevel, fatal
+from doty.log import LogLevel
 
 crypto_app = typer.Typer()
 file_app = typer.Typer()
@@ -33,6 +31,7 @@ crypto_app.add_typer(file_app, name="file")
 
 @command(file_app)
 def encrypt(
+    files: list[str] = typer.Argument(..., help="Files to encrypt"),
     version: bool = typer.Option(
         False,
         "-v",
@@ -62,11 +61,12 @@ def encrypt(
     """
     Encrypts a file.
     """
-    lib.encryptfile(dry_run=dry_run)
+    lib.encryptfiles(*files, dry_run=dry_run)
 
 
 @command(file_app)
 def decrypt(
+    files: list[str] = typer.Argument(..., help="Files to decrypt"),
     version: bool = typer.Option(
         False,
         "-v",
@@ -96,7 +96,7 @@ def decrypt(
     """
     Decrypts a file.
     """
-    lib.decryptfile(dry_run=dry_run)
+    lib.decryptfiles(*files, dry_run=dry_run)
 
 
 @file_app.callback(invoke_without_command=True)

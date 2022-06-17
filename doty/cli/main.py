@@ -38,7 +38,6 @@ import doty.lib as lib
 import doty.log as log
 from doty.cli.cli import command, state, update_state, version_callback
 from doty.cli.crypto import crypto_app
-from doty.exceptions import DotyNotImplementedException
 from doty.log import LogLevel
 
 DEFAULT_COMMAND = "populate"
@@ -156,7 +155,7 @@ def main() -> None:
         if debug:
             print(traceback.format_exc(), file=sys.stderr)
         print(
-            f"[red][bold]{os.path.basename(sys.argv[0])}: [/]Aborted by user...[/]",
+            "[red]Aborted by user...[/red]",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -165,7 +164,7 @@ def main() -> None:
         if debug:
             print(traceback.format_exc(), file=sys.stderr)
         print(
-            f"[red][bold]{os.path.basename(sys.argv[0])}: [/]{str(e)}[/]",
+            f"[red]{str(e)}[/red]",
             file=sys.stderr,
         )
         sys.exit(2)
@@ -174,7 +173,7 @@ def main() -> None:
         if debug:
             print(traceback.format_exc(), file=sys.stderr)
         print(
-            f"[red][bold]{os.path.basename(sys.argv[0])}: [/]{str(e)}[/]",
+            f"[red]{str(e)}[/red]",
             file=sys.stderr,
         )
         sys.exit(3)

@@ -33,8 +33,8 @@ class TestMainCli:
 class TestCryptoCli:
     def test_cli_crypto_file_encrypt(self, doty: ModuleType) -> None:
         with pytest.raises(doty.exceptions.DotyException):
-            doty.cli.crypto.encrypt()
+            doty.cli.crypto.encrypt("testfile")
 
     def test_cli_crypto_file_decrypt(self, doty: ModuleType) -> None:
         with pytest.raises(doty.exceptions.DotyException):
-            doty.cli.crypto.decrypt()
+            doty.cli.crypto.decrypt("testfile.encrypted")
