@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 .. include:: ../README.md
 """
-from template_python_project import api, examples
-from template_python_project.__version__ import (
+from doty import api, examples
+from doty.__version__ import (
     __major_version__,
     __minor_version__,
     __patch_version__,

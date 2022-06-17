@@ -32,8 +32,8 @@ if __name__ == "__main__":
 
     _sys.path.append(_os.path.join(_os.path.dirname(__file__), ".."))
 
-import template_python_project.api
-from template_python_project.__version__ import __version__
+import doty.api
+from doty.__version__ import __version__
 
 app = typer.Typer()
 
@@ -55,7 +55,7 @@ def api1() -> None:
     """
     Calls an example API function.
     """
-    template_python_project.api.some_api_func()
+    doty.api.some_api_func()
 
 
 @app.command()
@@ -63,7 +63,7 @@ def api2() -> None:
     """
     Calls another API function.
     """
-    template_python_project.api.other_api_func()
+    doty.api.other_api_func()
 
 
 @app.callback(invoke_without_command=True)

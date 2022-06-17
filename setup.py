@@ -32,18 +32,17 @@ def read_requirements(file: str) -> list[str]:
 
 
 setup_info = dict(
-    name="template-python-project",
-    version="0.30.2",
+    name="doty",
+    version="0.0.1",
     author="Leah Lackner",
     author_email="leah.lackner+github@gmail.com",
-    url="https://github.com/leahevy/template-python-project",
+    url="https://github.com/leahevy/doty",
     project_urls={
         "Documentation": "https://github.com/leahevy/"
-        "template-python-project"
+        "doty"
         "/blob/master/README.md",
-        "Source": "https://github.com/leahevy/template-python-project",
-        "Tracker": "https://github.com/leahevy/"
-        "template-python-project/issues",
+        "Source": "https://github.com/leahevy/doty",
+        "Tracker": "https://github.com/leahevy/" "doty/issues",
     },
     description="A Python project template.",
     long_description=read_file("README.md"),
@@ -63,9 +62,7 @@ setup_info = dict(
     ],
     zip_safe=True,
     entry_points={
-        "console_scripts": [
-            "template-python-project=template_python_project.cli:main"
-        ],
+        "console_scripts": ["doty=doty.cli:main"],
     },
     package_dir={"": "."},
     packages=find_packages(where="."),

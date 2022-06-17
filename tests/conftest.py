@@ -3,12 +3,12 @@ from typing import Any, Generator
 
 import pytest
 
-import template_python_project
+import doty
 
 
 @pytest.fixture(autouse=True)
 def add_imports(doctest_namespace: dict[str, Any]) -> None:
-    doctest_namespace["tp"] = template_python_project
+    doctest_namespace["doty"] = doty
 
 
 @pytest.fixture(autouse=True)
