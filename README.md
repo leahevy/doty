@@ -45,6 +45,16 @@ For installation of the latest version you can install it with pip directly from
 
 ---
 
+## 💡 Shell completion
+
+For shell completion run one of the appropriate commands:
+
+- `doty --install-completion=bash`
+- `doty --install-completion=zsh`
+- `doty --install-completion=fish`
+
+---
+
 ## ⌨️ Commands
 
 **TODO**
