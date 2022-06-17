@@ -28,7 +28,9 @@ state: dict[str, Any] = {
     "verbose": False,
     "dry_run": False,
     "log_level": LogLevel.info,
+    "key_file": None,
     "config_file": None,
+    "preserve_tmp": False,
 }
 
 
@@ -36,7 +38,9 @@ def update_state(
     verbose: bool | None = None,
     dry_run: bool | None = None,
     log_level: LogLevel | None = None,
+    key_file: str | None = None,
     config_file: str | None = None,
+    preserve_tmp: bool | None = None,
 ) -> None:
     if verbose:
         log_level = LogLevel.debug
@@ -48,6 +52,10 @@ def update_state(
         state["dry_run"] = dry_run
     if config_file is not None:
         state["config_file"] = config_file
+    if preserve_tmp is not None:
+        state["preserve_tmp"] = preserve_tmp
+    if key_file is not None:
+        state["key_file"] = key_file
 
 
 from typing import Callable, TypeVar
@@ -65,6 +73,8 @@ def command(
             verbose: bool | None = None,
             version: bool | None = None,
             log_level: LogLevel | None = None,
+            key_file: str | None = None,
+            preserve_tmp: bool | None = None,
             config_file: str | None = None,
             dry_run: bool | None = None,
             **kwargs: dict[str, Any],
@@ -73,6 +83,8 @@ def command(
                 verbose=verbose,
                 dry_run=dry_run,
                 log_level=log_level,
+                key_file=key_file,
+                preserve_tmp=preserve_tmp,
                 config_file=config_file,
             )
             argsnames = f.__code__.co_varnames
@@ -80,8 +92,12 @@ def command(
                 kwargs["dry_run"] = state["dry_run"]
             if "log_level" in argsnames:
                 kwargs["log_level"] = state["log_level"]
+            if "key_file" in argsnames:
+                kwargs["key_file"] = state["key_file"]
             if "config_file" in argsnames:
                 kwargs["config_file"] = state["config_file"]
+            if "preserve_tmp" in argsnames:
+                kwargs["preserve_tmp"] = state["preserve_tmp"]
             return f(
                 *args,
                 **kwargs,
@@ -103,3 +119,37 @@ def version_callback(value: bool) -> None:
             f" [blue]v{__version__}[/blue]"
         )
         raise typer.Exit()
+
+
+def add_cmd_to_args(args: list[str], cmd: str) -> list[str]:
+    result = []
+    appended = False
+    for arg in args[1:][::-1]:
+        if not appended and not arg.startswith("-"):
+            result.append(cmd)
+            appended = True
+        result.append(arg)
+    if not appended:
+        result.append(cmd)
+    result.append(args[0])
+
+    result = result[::-1]
+    return result
+
+
+def move_global_args(args: list[str]) -> list[str]:
+    result = []
+    result.append(args[0])
+    global_options = []
+    arg_found = False
+
+    for arg in args[1:]:
+        if not arg_found and arg.startswith("-"):
+            global_options.append(arg)
+        else:
+            arg_found = True
+            result.append(arg)
+            result.extend(global_options)
+            global_options = []
+    result.extend(global_options)
+    return result

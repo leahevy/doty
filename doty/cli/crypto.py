@@ -21,12 +21,22 @@ import sys
 import typer
 
 import doty.crypto as crypto
-from doty.cli.cli import command, update_state, version_callback
+import doty.log as log
+from doty.cli.cli import (
+    add_cmd_to_args,
+    command,
+    update_state,
+    version_callback,
+)
 from doty.log import LogLevel
 
 crypto_app = typer.Typer()
+
 file_app = typer.Typer()
 crypto_app.add_typer(file_app, name="file")
+
+keys_app = typer.Typer()
+crypto_app.add_typer(keys_app, name="key")
 
 
 @command(file_app)
@@ -52,8 +62,15 @@ def encrypt(
         "--config-file",
         help="Overwrites the search path for the configuration.",
     ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -67,7 +84,9 @@ def encrypt(
     """
     Encrypts a file.
     """
-    crypto.encryptfiles(*files, dry_run=dry_run, config_file=config_file)
+    crypto.encryptfiles(
+        *files, dry_run=dry_run, config_file=config_file, key_file=key_file
+    )
 
 
 @command(file_app)
@@ -93,8 +112,15 @@ def decrypt(
         "--config-file",
         help="Overwrites the search path for the configuration.",
     ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -108,7 +134,173 @@ def decrypt(
     """
     Decrypts a file.
     """
-    crypto.decryptfiles(*files, dry_run=dry_run, config_file=config_file)
+    crypto.decryptfiles(
+        *files, dry_run=dry_run, config_file=config_file, key_file=key_file
+    )
+
+
+@command(crypto_app)
+def modify(
+    directory: str = typer.Argument(".", help="Directory to modify"),
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
+    log_level: LogLevel = typer.Option(
+        None,
+        "-l",
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
+    """
+    Decrypts a file.
+    """
+    crypto.modify(
+        directory, dry_run=dry_run, config_file=config_file, key_file=key_file
+    )
+
+
+@command(keys_app)
+def genkey(
+    output_file: str = typer.Option(
+        None,
+        "-o",
+        "--output",
+        help="Specifies the target file.",
+    ),
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
+    log_level: LogLevel = typer.Option(
+        None,
+        "-l",
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
+    """
+    Generates a key.
+    """
+    crypto.genkey(
+        output_file=output_file,
+        dry_run=dry_run,
+        config_file=config_file,
+        key_file=key_file,
+    )
+
+
+@keys_app.callback(invoke_without_command=True)
+def keys_callback(
+    ctx: typer.Context,
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
+    log_level: LogLevel = typer.Option(
+        None,
+        "-l",
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
+    update_state(
+        verbose=verbose,
+        dry_run=dry_run,
+        log_level=log_level,
+        key_file=key_file,
+        config_file=config_file,
+    )
+    pass
+    if ctx.invoked_subcommand is None:
+        cmdline = add_cmd_to_args(sys.argv, genkey.__name__)
+        log.debug(f"Exec {cmdline}")
+        os.execv(sys.argv[0], cmdline)
 
 
 @file_app.callback(invoke_without_command=True)
@@ -134,8 +326,15 @@ def file_callback(
         "--config-file",
         help="Overwrites the search path for the configuration.",
     ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -150,10 +349,13 @@ def file_callback(
         verbose=verbose,
         dry_run=dry_run,
         log_level=log_level,
+        key_file=key_file,
         config_file=config_file,
     )
     if ctx.invoked_subcommand is None:
-        os.execv(sys.argv[0], sys.argv + ["--help"])
+        cmdline = add_cmd_to_args(sys.argv, "--help")
+        log.debug(f"Exec {cmdline}")
+        os.execv(sys.argv[0], cmdline)
 
 
 @crypto_app.callback(invoke_without_command=True)
@@ -179,8 +381,15 @@ def crypto_callback(
         "--config-file",
         help="Overwrites the search path for the configuration.",
     ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -195,7 +404,10 @@ def crypto_callback(
         verbose=verbose,
         dry_run=dry_run,
         log_level=log_level,
+        key_file=key_file,
         config_file=config_file,
     )
     if ctx.invoked_subcommand is None:
-        os.execv(sys.argv[0], sys.argv + ["--help"])
+        cmdline = add_cmd_to_args(sys.argv, "--help")
+        log.debug(f"Exec {cmdline}")
+        os.execv(sys.argv[0], cmdline)

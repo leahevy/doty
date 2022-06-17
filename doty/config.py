@@ -18,8 +18,5 @@ from doty.exceptions import DotyConfigException, DotyNotImplementedException
 
 
 def show(config_file: str | None = None) -> None:
-    log.fatal(
-        DotyNotImplementedException,
-        "show not implemented yet",
-        data={"config_file": config_file},
-    )
+    log.debug("show", config_file=config_file)
+    log.fatal(DotyNotImplementedException, "show not implemented yet")

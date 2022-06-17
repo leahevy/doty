@@ -89,6 +89,7 @@ def set_log_level(log_level: LogLevel) -> None:
 
 def _format_text(text: str, *args: Any, **kwargs: Any) -> str:
     text = text.format(*args, **kwargs)
+    text = f"{text} ({args}, {kwargs})"
     return text
 
 

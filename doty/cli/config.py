@@ -21,7 +21,13 @@ import sys
 import typer
 
 import doty.config as config
-from doty.cli.cli import command, update_state, version_callback
+import doty.log as log
+from doty.cli.cli import (
+    add_cmd_to_args,
+    command,
+    update_state,
+    version_callback,
+)
 from doty.log import LogLevel
 
 config_app = typer.Typer()
@@ -44,7 +50,8 @@ def show(
         help="Overwrites the search path for the configuration.",
     ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -56,13 +63,13 @@ def show(
     ),
 ) -> None:
     """
-    Encrypts a file.
+    Prints the current configuration.
     """
     config.show(config_file=config_file)
 
 
 @config_app.callback(invoke_without_command=True)
-def file_callback(
+def config_callback(
     ctx: typer.Context,
     version: bool = typer.Option(
         False,
@@ -85,7 +92,8 @@ def file_callback(
         help="Overwrites the search path for the configuration.",
     ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -103,4 +111,6 @@ def file_callback(
         config_file=config_file,
     )
     if ctx.invoked_subcommand is None:
-        os.execv(sys.argv[0], sys.argv + [show.__name__])
+        cmdline = add_cmd_to_args(sys.argv, show.__name__)
+        log.debug(f"Exec {cmdline}")
+        os.execv(sys.argv[0], cmdline)

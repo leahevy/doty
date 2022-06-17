@@ -18,20 +18,64 @@ from doty.exceptions import DotyNotImplementedException
 
 
 def encryptfiles(
-    *files: str, dry_run: bool = False, config_file: str | None = None
+    *files: str,
+    dry_run: bool = False,
+    config_file: str | None = None,
+    key_file: str | None = None
 ) -> None:
-    log.fatal(
-        DotyNotImplementedException,
-        "encryptfile not implemented yet",
-        data={"files": files, "dry_run": dry_run, "config_file": config_file},
+    log.debug(
+        "encryptfiles",
+        files=files,
+        dry_run=dry_run,
+        config_file=config_file,
+        key_file=key_file,
     )
+    log.fatal(DotyNotImplementedException, "encryptfile not implemented yet")
 
 
 def decryptfiles(
-    *files: str, dry_run: bool = False, config_file: str | None = None
+    *files: str,
+    dry_run: bool = False,
+    config_file: str | None = None,
+    key_file: str | None = None
 ) -> None:
-    log.fatal(
-        DotyNotImplementedException,
-        "decryptfile not implemented yet",
-        data={"files": files, "dry_run": dry_run, "config_file": config_file},
+    log.debug(
+        "decryptfiles",
+        files=files,
+        dry_run=dry_run,
+        config_file=config_file,
+        key_file=key_file,
     )
+    log.fatal(DotyNotImplementedException, "decryptfile not implemented yet")
+
+
+def modify(
+    directory: str = ".",
+    dry_run: bool = False,
+    config_file: str | None = None,
+    key_file: str | None = None,
+) -> None:
+    log.debug(
+        "modify",
+        directory=directory,
+        dry_run=dry_run,
+        config_file=config_file,
+        key_file=key_file,
+    )
+    log.fatal(DotyNotImplementedException, "modify not implemented yet")
+
+
+def genkey(
+    output_file: str | None = None,
+    dry_run: bool = False,
+    config_file: str | None = None,
+    key_file: str | None = None,
+) -> None:
+    log.debug(
+        "genkey",
+        output_file=output_file,
+        dry_run=dry_run,
+        config_file=config_file,
+        key_file=key_file,
+    )
+    log.fatal(DotyNotImplementedException, "genkey not implemented yet")

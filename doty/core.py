@@ -17,17 +17,22 @@ import doty.log as log
 from doty.exceptions import DotyNotImplementedException
 
 
-def populate(dry_run: bool = False, config_file: str | None = None) -> None:
-    log.fatal(
-        DotyNotImplementedException,
-        "populate not implemented yet",
-        data={"dry_run": dry_run, "config_file": config_file},
+def populate(
+    dry_run: bool = False,
+    config_file: str | None = None,
+    preserve_tmp: bool = False,
+    key_file: str | None = None,
+) -> None:
+    log.debug(
+        "populate",
+        dry_run=dry_run,
+        config_file=config_file,
+        preserve_tmp=preserve_tmp,
+        key_file=key_file,
     )
+    log.fatal(DotyNotImplementedException, "populate not implemented yet")
 
 
 def health(config_file: str | None = None) -> None:
-    log.fatal(
-        DotyNotImplementedException,
-        "health not implemented yet",
-        data={"config_file": config_file},
-    )
+    log.debug("health", config_file=config_file)
+    log.fatal(DotyNotImplementedException, "health not implemented yet")

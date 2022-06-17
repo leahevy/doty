@@ -36,7 +36,14 @@ if __name__ == "__main__":
 
 import doty.core as core
 import doty.log as log
-from doty.cli.cli import command, state, update_state, version_callback
+from doty.cli.cli import (
+    add_cmd_to_args,
+    command,
+    move_global_args,
+    state,
+    update_state,
+    version_callback,
+)
 from doty.cli.config import config_app
 from doty.cli.crypto import crypto_app
 from doty.log import LogLevel
@@ -57,7 +64,8 @@ def health(
         is_eager=True,
     ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -102,8 +110,21 @@ def populate(
         "--config-file",
         help="Overwrites the search path for the configuration.",
     ),
+    preserve_tmp: bool = typer.Option(
+        None,
+        "-p",
+        "--preserve-tmp",
+        help="Preserves the tmp dir (can be combined with --dry-run to check the generated files manually without populating)",
+    ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -114,7 +135,12 @@ def populate(
         help="Prints debug output.",
     ),
 ) -> None:
-    core.populate(dry_run=dry_run, config_file=config_file)
+    core.populate(
+        dry_run=dry_run,
+        config_file=config_file,
+        preserve_tmp=preserve_tmp,
+        key_file=key_file,
+    )
 
 
 @app.callback(invoke_without_command=True)
@@ -134,14 +160,27 @@ def main_callback(
         "--dry-run",
         help="Only print the changes. Don't do anything.",
     ),
+    preserve_tmp: bool = typer.Option(
+        None,
+        "-p",
+        "--preserve-tmp",
+        help="Preserves the tmp dir (can be combined with --dry-run to check the generated files manually without populating)",
+    ),
     config_file: str = typer.Option(
         None,
         "-c",
         "--config-file",
         help="Overwrites the search path for the configuration.",
     ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
     log_level: LogLevel = typer.Option(
-        LogLevel.info,
+        None,
+        "-l",
         "--log-level",
         help="Sets the log level.",
     ),
@@ -156,10 +195,14 @@ def main_callback(
         verbose=verbose,
         dry_run=dry_run,
         log_level=log_level,
+        key_file=key_file,
         config_file=config_file,
+        preserve_tmp=preserve_tmp,
     )
     if ctx.invoked_subcommand is None:
-        os.execv(sys.argv[0], [sys.argv[0], populate.__name__] + sys.argv[1:])
+        cmdline = [sys.argv[0], populate.__name__] + sys.argv[1:]
+        log.debug(f"Exec {cmdline}")
+        os.execv(sys.argv[0], cmdline)
 
 
 app.add_typer(crypto_app, name="crypto")
