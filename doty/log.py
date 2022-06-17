@@ -14,9 +14,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from enum import Enum
+from typing import Any, Type
 
 
 class LogLevel(str, Enum):
     info = "info"
-    warning = "warning"
+    warn = "warn"
     debug = "debug"
+
+
+LEVEL = LogLevel.info
+
+
+def info(msg: str, *args: Any, **kwargs: Any) -> None:
+    pass
+
+
+def warn(msg: str, *args: Any, **kwargs: Any) -> None:
+    pass
+
+
+def error(msg: str, *args: Any, **kwargs: Any) -> None:
+    pass
+
+
+def fatal(
+    exceptiontype: Type[Exception], msg: str, *args: Any, **kwargs: Any
+) -> None:
+    raise exceptiontype(msg, *args, **kwargs)

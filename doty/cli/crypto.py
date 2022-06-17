@@ -23,7 +23,8 @@ from rich import print
 
 import doty.lib
 from doty.cli.cli import command, update_state, version_callback
-from doty.log import LogLevel
+from doty.exceptions import DotyNotImplementedException
+from doty.log import LogLevel, fatal
 
 crypto_app = typer.Typer()
 file_app = typer.Typer()
@@ -62,8 +63,10 @@ def encrypt(
     Encrypts a file.
     """
     options = dict(dry_run=dry_run, log_level=log_level)
-    raise NotImplementedError(
-        f"encryptfile not implemented yet, options: {options}"
+    fatal(
+        DotyNotImplementedException,
+        "encryptfile not implemented yet",
+        data=options,
     )
 
 
@@ -99,8 +102,10 @@ def decrypt(
     Decrypts a file.
     """
     options = dict(dry_run=dry_run, log_level=log_level)
-    raise NotImplementedError(
-        f"decryptfile not implemented yet, options: {options}"
+    fatal(
+        DotyNotImplementedException,
+        "decryptfile not implemented yet",
+        data=options,
     )
 
 

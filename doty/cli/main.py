@@ -37,7 +37,8 @@ if __name__ == "__main__":
 import doty.lib
 from doty.cli.cli import command, state, update_state, version_callback
 from doty.cli.crypto import crypto_app
-from doty.log import LogLevel
+from doty.exceptions import DotyNotImplementedException
+from doty.log import LogLevel, fatal
 
 DEFAULT_COMMAND = "populate"
 
@@ -76,8 +77,10 @@ def health(
     Checks if everything is set-up correctly and all required programs are available.
     """
     options = dict(dry_run=dry_run, log_level=log_level)
-    raise NotImplementedError(
-        f"health not implemented yet, options: {options}"
+    fatal(
+        DotyNotImplementedException,
+        "health not implemented yet",
+        data=options,
     )
 
 
@@ -110,8 +113,10 @@ def populate(
     ),
 ) -> None:
     options = dict(dry_run=dry_run, log_level=log_level)
-    raise NotImplementedError(
-        f"populate not implemented yet, options: {options}"
+    fatal(
+        DotyNotImplementedException,
+        "populate not implemented yet",
+        data=options,
     )
 
 
