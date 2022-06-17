@@ -35,10 +35,11 @@ if __name__ == "__main__":
     _sys.path.append(_os.path.join(_os.path.dirname(__file__), "..", ".."))
 
 import doty.lib
+import doty.log as log
 from doty.cli.cli import command, state, update_state, version_callback
 from doty.cli.crypto import crypto_app
 from doty.exceptions import DotyNotImplementedException
-from doty.log import LogLevel, fatal
+from doty.log import LogLevel
 
 DEFAULT_COMMAND = "populate"
 
@@ -77,7 +78,7 @@ def health(
     Checks if everything is set-up correctly and all required programs are available.
     """
     options = dict(dry_run=dry_run, log_level=log_level)
-    fatal(
+    log.fatal(
         DotyNotImplementedException,
         "health not implemented yet",
         data=options,
@@ -113,7 +114,7 @@ def populate(
     ),
 ) -> None:
     options = dict(dry_run=dry_run, log_level=log_level)
-    fatal(
+    log.fatal(
         DotyNotImplementedException,
         "populate not implemented yet",
         data=options,
@@ -163,22 +164,29 @@ def main() -> None:
     except (Abort, KeyboardInterrupt):
         debug = state["log_level"] == LogLevel.debug
         if debug:
-            print(traceback.format_exc())
+            print(traceback.format_exc(), file=sys.stderr)
         print(
-            f"[red][bold]{os.path.basename(sys.argv[0])}: [/]Aborted by user...[/]"
+            f"[red][bold]{os.path.basename(sys.argv[0])}: [/]Aborted by user...[/]",
+            file=sys.stderr,
         )
         sys.exit(1)
     except (NoSuchOption, BadArgumentUsage, UsageError) as e:
         debug = state["log_level"] == LogLevel.debug
         if debug:
-            print(traceback.format_exc())
-        print(f"[red][bold]{os.path.basename(sys.argv[0])}: [/]{str(e)}[/]")
+            print(traceback.format_exc(), file=sys.stderr)
+        print(
+            f"[red][bold]{os.path.basename(sys.argv[0])}: [/]{str(e)}[/]",
+            file=sys.stderr,
+        )
         sys.exit(2)
     except Exception as e:
         debug = state["log_level"] == LogLevel.debug
         if debug:
-            print(traceback.format_exc())
-        print(f"[red][bold]{os.path.basename(sys.argv[0])}: [/]{str(e)}[/]")
+            print(traceback.format_exc(), file=sys.stderr)
+        print(
+            f"[red][bold]{os.path.basename(sys.argv[0])}: [/]{str(e)}[/]",
+            file=sys.stderr,
+        )
         sys.exit(3)
     sys.exit(0)
 

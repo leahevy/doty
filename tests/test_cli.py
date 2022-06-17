@@ -17,18 +17,24 @@
 
 from types import ModuleType
 
+import pytest
+
 
 class TestMainCli:
     def test_cli_main_populate(self, doty: ModuleType) -> None:
-        doty.cli.main.populate()
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.main.populate()
 
     def test_cli_main_health(self, doty: ModuleType) -> None:
-        doty.cli.main.health()
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.main.health()
 
 
 class TestCryptoCli:
     def test_cli_crypto_file_encrypt(self, doty: ModuleType) -> None:
-        doty.cli.crypto.encrypt()
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.crypto.encrypt()
 
     def test_cli_crypto_file_decrypt(self, doty: ModuleType) -> None:
-        doty.cli.crypto.decrypt()
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.crypto.decrypt()

@@ -22,7 +22,7 @@ import typer
 from rich import print
 
 from doty.__version__ import __version__
-from doty.log import LogLevel
+from doty.log import LogLevel, set_log_level
 
 state = {
     "verbose": False,
@@ -41,6 +41,7 @@ def update_state(
 
     if log_level is not None:
         state["log_level"] = log_level
+        set_log_level(log_level)
     if dry_run is not None:
         state["dry_run"] = dry_run
 

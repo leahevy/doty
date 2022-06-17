@@ -13,29 +13,105 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import logging
+import os
+import sys
 from enum import Enum
 from typing import Any, Type
 
+from rich import print
+from rich.text import Text
+
 
 class LogLevel(str, Enum):
-    info = "info"
-    warn = "warn"
-    debug = "debug"
+    debug = logging.DEBUG
+    info = logging.INFO
+    warning = logging.WARNING
+    warn = logging.WARNING
+    error = logging.ERROR
+    critical = logging.CRITICAL
 
 
-LEVEL = LogLevel.info
+class CustomLogHandler(logging.Handler):
+    def emit(self, log_record: logging.LogRecord) -> None:
+        log_level = log_record.levelname
+
+        color = "white"
+        file = sys.stdout
+        underline = False
+        unformated = False
+        match log_level.lower():
+            case LogLevel.debug.name:
+                color = "yellow"
+                file = sys.stderr
+            case LogLevel.info.name:
+                color = "green"
+                unformated = True
+            case LogLevel.warning.name:
+                color = "cyan"
+                file = sys.stderr
+            case LogLevel.error.name:
+                color = "red"
+                file = sys.stderr
+            case LogLevel.critical.name:
+                color = "red"
+                file = sys.stderr
+                underline = True
+
+        if unformated:
+            log_message = log_record.msg
+        else:
+            log_message = self.format(log_record)
+
+        log_message = f"[{color}]{log_message}[/{color}]"
+        if underline:
+            log_message = f"[underline]{log_message}[/underline]"
+        print(log_message, file=file)
+        file.flush()
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(os.path.basename(sys.argv[0]))
+formatter = logging.Formatter(
+    fmt="(%(levelname)s)"
+    " [magenta]([italic]%(asctime)s)[/italic]"
+    "[/magenta][white]:[/white]"
+    " %(message)s",
+    datefmt="%H:%M",
+)
+handler = CustomLogHandler()
+handler.setFormatter(formatter)
+logger.handlers = [handler]
+logger.propagate = False
+
+
+def set_log_level(log_level: LogLevel) -> None:
+    logger.setLevel(log_level.name.upper())
+
+
+def _format_text(text: str, *args: Any, **kwargs: Any) -> str:
+    text = text.format(*args, **kwargs)
+    return text
+
+
+def debug(msg: str, *args: Any, **kwargs: Any) -> None:
+    logger.debug(_format_text(msg, *args, **kwargs))
 
 
 def info(msg: str, *args: Any, **kwargs: Any) -> None:
-    pass
+    logger.info(_format_text(msg, *args, **kwargs))
 
 
-def warn(msg: str, *args: Any, **kwargs: Any) -> None:
-    pass
+def warning(msg: str, *args: Any, **kwargs: Any) -> None:
+    logger.warning(_format_text(msg, *args, **kwargs))
 
 
 def error(msg: str, *args: Any, **kwargs: Any) -> None:
-    pass
+    logger.error(_format_text(msg, *args, **kwargs))
+
+
+def critical(msg: str, *args: Any, **kwargs: Any) -> None:
+    logger.critical(_format_text(msg, *args, **kwargs))
 
 
 def fatal(
