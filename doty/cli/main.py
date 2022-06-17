@@ -46,6 +46,7 @@ from doty.cli.cli import (
 )
 from doty.cli.config import config_app
 from doty.cli.crypto import crypto_app
+from doty.cli.internal import internal_app
 from doty.cli.pkgs import pkgs_app
 from doty.log import LogLevel
 
@@ -264,6 +265,7 @@ def main_callback(
 app.add_typer(crypto_app, name="crypto")
 app.add_typer(config_app, name="config")
 app.add_typer(pkgs_app, name="pkg")
+app.add_typer(internal_app, name="internal")
 
 
 def main() -> None:

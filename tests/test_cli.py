@@ -30,8 +30,7 @@ class TestCoreCli:
             doty.cli.main.populate()
 
     def test_cli_main_health(self, doty: ModuleType) -> None:
-        with pytest.raises(doty.exceptions.DotyException):
-            doty.cli.main.health()
+        doty.cli.main.health()
 
 
 class TestCryptoCli:
@@ -62,3 +61,9 @@ class TestPkgsCli:
     def test_cli_pkgs_upgrade(self, doty: ModuleType) -> None:
         with pytest.raises(doty.exceptions.DotyException):
             doty.cli.pkgs.upgrade()
+
+
+class TestInternalCli:
+    def test_cli_internal_runconfigure(self, doty: ModuleType) -> None:
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.internal.run_configure("Testfile.sh", "pre-populate")

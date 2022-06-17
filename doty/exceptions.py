@@ -29,8 +29,8 @@ class DotyException(Exception):
 
     def __str__(self) -> str:
         s = []
-        s.append(self.type)
-        s.append(": ")
+        s.append("⚠️")
+        s.append(" ")
         s.append(self.msg)
         if self.data:
             s.append(f", {self.data}")
@@ -49,10 +49,10 @@ class DotyCliException(DotyException):
         self.type = "Cli"
 
 
-class DotyLibException(DotyException):
+class DotyCoreException(DotyException):
     def __post_init__(self) -> None:
         super().__post_init__()
-        self.type = "Library"
+        self.type = "Core"
 
 
 class DotyConfigException(DotyException):

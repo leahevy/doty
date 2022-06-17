@@ -37,14 +37,12 @@ class CustomLogHandler(logging.Handler):
         color = "white"
         file = sys.stdout
         underline = False
-        unformated = False
         match log_level.lower():
             case LogLevel.debug.name:
                 color = "yellow"
                 file = sys.stderr
             case LogLevel.info.name:
-                color = "green"
-                unformated = True
+                color = "white"
             case LogLevel.warning.name:
                 color = "cyan"
                 file = sys.stderr
@@ -56,10 +54,10 @@ class CustomLogHandler(logging.Handler):
                 file = sys.stderr
                 underline = True
 
-        if unformated:
-            log_message = log_record.msg
-        else:
+        if logger.getEffectiveLevel() == logging.DEBUG:
             log_message = self.format(log_record)
+        else:
+            log_message = log_record.msg
 
         log_message = f"[{color}]{log_message}[/{color}]"
         if underline:
@@ -89,7 +87,8 @@ def set_log_level(log_level: LogLevel) -> None:
 
 def _format_text(text: str, *args: Any, **kwargs: Any) -> str:
     text = text.format(*args, **kwargs)
-    text = f"{text} ({args}, {kwargs})"
+    if logger.getEffectiveLevel() == logging.DEBUG:
+        text = f"{text} ({args}, {kwargs})"
     return text
 
 

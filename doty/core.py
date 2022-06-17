@@ -14,7 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import doty.log as log
-from doty.exceptions import DotyNotImplementedException
+from doty.exceptions import DotyCoreException, DotyNotImplementedException
+from doty.utils import get_package_file, is_installed
 
 
 def build(
@@ -49,6 +50,31 @@ def populate(
     log.fatal(DotyNotImplementedException, "populate not implemented yet")
 
 
-def health(config_file: str | None = None) -> None:
+def health(config_file: str | None = None, quiet: bool = False) -> None:
     log.debug("health", config_file=config_file)
-    log.fatal(DotyNotImplementedException, "health not implemented yet")
+    if not quiet:
+        log.info("Dotys health 💊:")
+
+    has_error = False
+
+    with open(get_package_file("required-programs.txt"), "r") as f:
+        required_programs = [
+            line.strip()
+            for line in f.read().strip().split("\n")
+            if not line.startswith("#") and line.strip()
+        ]
+
+    for program in required_programs:
+        if not is_installed(program):
+            has_error = True
+            if not quiet:
+                log.error(
+                    "  - ‼️ {program} is not installed.", program=program
+                )
+        else:
+            if not quiet:
+                log.info("  - ✅️ {program} available.", program=program)
+    if has_error:
+        raise DotyCoreException("Health-check failed.")
+    elif not quiet:
+        log.info("[green] => 😎 Everything fine[/green]")

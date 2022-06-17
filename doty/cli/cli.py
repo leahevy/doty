@@ -64,7 +64,7 @@ RT = TypeVar("RT")  # return type
 
 
 def command(
-    app: typer.Typer,
+    app: typer.Typer, name: str | None = None
 ) -> Callable[[Callable[..., RT]], Callable[..., RT]]:
     def decorator(f: Callable[..., RT]) -> Callable[..., RT]:
         @functools.wraps(f)
@@ -103,7 +103,10 @@ def command(
                 **kwargs,
             )
 
-        inner_cmd_click = app.command()(inner_cmd)
+        if name:
+            inner_cmd_click = app.command(name)(inner_cmd)
+        else:
+            inner_cmd_click = app.command()(inner_cmd)
         return inner_cmd_click
 
     return decorator
