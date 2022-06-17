@@ -18,9 +18,9 @@
 from types import ModuleType
 
 
-def test_doty_api_some(doty: ModuleType) -> None:
-    doty.api.some_api_func()
+def test_doty_lib_some(doty: ModuleType) -> None:
+    doty.lib.some_lib_func()
 
 
-def test_doty_api_other(doty: ModuleType) -> None:
-    doty.api.other_api_func()
+def test_doty_lib_other(doty: ModuleType) -> None:
+    doty.lib.other_lib_func()

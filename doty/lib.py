@@ -16,15 +16,15 @@
 from rich import print
 
 
-def some_api_func() -> None:
+def some_lib_func() -> None:
     """
-    Some example api function.
+    Some example lib function.
     """
-    print("[green]Hello[/green] [yellow]from[/yellow] [red]some api[/red].")
+    print("[green]Hello[/green] [yellow]from[/yellow] [red]some lib[/red].")
 
 
-def other_api_func() -> None:
+def other_lib_func() -> None:
     """
-    Some other api function.
+    Some other lib function.
     """
-    print("[green]Hello[/green] [yellow]from[/yellow] [red]other api[/red].")
+    print("[green]Hello[/green] [yellow]from[/yellow] [red]other lib[/red].")
