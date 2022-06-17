@@ -38,9 +38,7 @@ setup_info = dict(
     author_email="leah.lackner+github@gmail.com",
     url="https://github.com/leahevy/doty",
     project_urls={
-        "Documentation": "https://leahevy.github.io/"
-        "doty"
-        "/blob/master/README.md",
+        "Documentation": "https://leahevy.github.io/" "doty",
         "Source": "https://github.com/leahevy/doty",
         "Tracker": "https://github.com/leahevy/" "doty/issues",
     },
