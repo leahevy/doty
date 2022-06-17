@@ -33,7 +33,7 @@ def read_requirements(file: str) -> list[str]:
 
 setup_info = dict(
     name="doty",
-    version="0.3.0",
+    version="0.4.0",
     author="Leah Lackner",
     author_email="leah.lackner+github@gmail.com",
     url="https://github.com/leahevy/doty",

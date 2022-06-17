@@ -2,6 +2,11 @@ Changelog
 =========
 
 
+v0.4.0 (2022-06-17)
+-------------------
+- Update badges. [Leah Lackner]
+
+
 v0.3.0 (2022-06-17)
 -------------------
 - Update data from base template. [Leah Lackner]
