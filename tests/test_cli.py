@@ -20,7 +20,11 @@ from types import ModuleType
 import pytest
 
 
-class TestMainCli:
+class TestCoreCli:
+    def test_cli_main_build(self, doty: ModuleType) -> None:
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.main.build()
+
     def test_cli_main_populate(self, doty: ModuleType) -> None:
         with pytest.raises(doty.exceptions.DotyException):
             doty.cli.main.populate()
@@ -48,3 +52,13 @@ class TestConfigCli:
     def test_cli_config_show(self, doty: ModuleType) -> None:
         with pytest.raises(doty.exceptions.DotyException):
             doty.cli.config.show()
+
+
+class TestPkgsCli:
+    def test_cli_pkgs_status(self, doty: ModuleType) -> None:
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.pkgs.status()
+
+    def test_cli_pkgs_upgrade(self, doty: ModuleType) -> None:
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.pkgs.upgrade()

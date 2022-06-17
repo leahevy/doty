@@ -46,9 +46,10 @@ from doty.cli.cli import (
 )
 from doty.cli.config import config_app
 from doty.cli.crypto import crypto_app
+from doty.cli.pkgs import pkgs_app
 from doty.log import LogLevel
 
-DEFAULT_COMMAND = "populate"
+DEFAULT_COMMAND = "build"
 
 app = typer.Typer(context_settings={"help_option_names": ["-h", "--help"]})
 
@@ -86,6 +87,61 @@ def health(
     Checks if everything is set-up correctly and all required programs are available.
     """
     core.health(config_file=config_file)
+
+
+@command(app)
+def build(
+    version: bool = typer.Option(
+        False,
+        "-v",
+        "--version",
+        help="Prints the version",
+        callback=version_callback,
+        is_eager=True,
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+    config_file: str = typer.Option(
+        None,
+        "-c",
+        "--config-file",
+        help="Overwrites the search path for the configuration.",
+    ),
+    preserve_tmp: bool = typer.Option(
+        None,
+        "-p",
+        "--preserve-tmp",
+        help="Preserves the tmp dir (can be combined with --dry-run to check the generated files manually without populating)",
+    ),
+    key_file: str = typer.Option(
+        None,
+        "-K",
+        "--key-file",
+        help="Overwrites the key file path.",
+    ),
+    log_level: LogLevel = typer.Option(
+        None,
+        "-l",
+        "--log-level",
+        help="Sets the log level.",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "-V",
+        "--verbose",
+        help="Prints debug output.",
+    ),
+) -> None:
+    core.build(
+        dry_run=dry_run,
+        config_file=config_file,
+        preserve_tmp=preserve_tmp,
+        key_file=key_file,
+    )
 
 
 @command(app)
@@ -200,13 +256,14 @@ def main_callback(
         preserve_tmp=preserve_tmp,
     )
     if ctx.invoked_subcommand is None:
-        cmdline = [sys.argv[0], populate.__name__] + sys.argv[1:]
+        cmdline = [sys.argv[0], DEFAULT_COMMAND] + sys.argv[1:]
         log.debug(f"Exec {cmdline}")
         os.execv(sys.argv[0], cmdline)
 
 
 app.add_typer(crypto_app, name="crypto")
 app.add_typer(config_app, name="config")
+app.add_typer(pkgs_app, name="pkg")
 
 
 def main() -> None:

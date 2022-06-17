@@ -17,6 +17,22 @@ import doty.log as log
 from doty.exceptions import DotyNotImplementedException
 
 
+def build(
+    dry_run: bool = False,
+    config_file: str | None = None,
+    preserve_tmp: bool = False,
+    key_file: str | None = None,
+) -> None:
+    log.debug(
+        "build",
+        dry_run=dry_run,
+        config_file=config_file,
+        preserve_tmp=preserve_tmp,
+        key_file=key_file,
+    )
+    log.fatal(DotyNotImplementedException, "build not implemented yet")
+
+
 def populate(
     dry_run: bool = False,
     config_file: str | None = None,
