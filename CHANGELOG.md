@@ -2,6 +2,11 @@ Changelog
 =========
 
 
+v0.5.0 (2022-06-17)
+-------------------
+- Update documentation link. [Leah Lackner]
+
+
 v0.4.0 (2022-06-17)
 -------------------
 - Update badges. [Leah Lackner]
