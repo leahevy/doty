@@ -38,3 +38,9 @@ class TestCryptoCli:
     def test_cli_crypto_file_decrypt(self, doty: ModuleType) -> None:
         with pytest.raises(doty.exceptions.DotyException):
             doty.cli.crypto.decrypt("testfile.encrypted")
+
+
+class TestConfigCli:
+    def test_cli_config_show(self, doty: ModuleType) -> None:
+        with pytest.raises(doty.exceptions.DotyException):
+            doty.cli.config.show()

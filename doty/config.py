@@ -14,4 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import doty.log as log
-from doty.exceptions import DotyConfigException
+from doty.exceptions import DotyConfigException, DotyNotImplementedException
+
+
+def show() -> None:
+    log.fatal(DotyNotImplementedException, "show not implemented yet")

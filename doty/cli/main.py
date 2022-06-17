@@ -37,6 +37,7 @@ if __name__ == "__main__":
 import doty.core as core
 import doty.log as log
 from doty.cli.cli import command, state, update_state, version_callback
+from doty.cli.config import config_app
 from doty.cli.crypto import crypto_app
 from doty.log import LogLevel
 
@@ -139,6 +140,7 @@ def main_callback(
 
 
 app.add_typer(crypto_app, name="crypto")
+app.add_typer(config_app, name="config")
 
 
 def main() -> None:
