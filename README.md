@@ -4,7 +4,7 @@
 <br/>
 
 <p align="center">
-<b>✨ The doty package. ✨</b> 
+<b>✨ The true dotfiles manager. ✨</b> 
 </p>
 
 <p align="center">
@@ -27,9 +27,7 @@
 
 ## 💫 [Doty](https://github.com/leahevy/doty)
 
-A Python project template.
-
-Some description comes here.
+**Doty** is a new and modern dotfiles manager.
 
 [The source for this project is available here.](https://github.com/leahevy/doty)
 
@@ -47,14 +45,7 @@ For installation of the latest version you can install it with pip directly from
 
 ## ⌨️ Commands
 
-The following commands are available:
-
-<dl>
-  <dt><strong>api1</strong></dt>
-  <dd>Calls an example API function.</dd>
-  <dt><strong>api2</strong></dt>
-  <dd>Calls another API function.</dd>
-</dl>
+**TODO**
 
 ---
 

@@ -32,6 +32,4 @@ To see the development commands, run `make help`.
 
 Create an account on <https://pypi.org/account/register/>
 
-Use the provided **Makefile** commands to upload the package: `make upload-pypi-test` (*testpypi* repository) and `make upload-pypi-public` (default *pypi* repository).
-
-You can also activate the automatic release workflow (**./.github/workflows/release.yml**) and setup the secret **PYPI_API_TOKEN**.
+Releases will be automatically released on **Pypi** using the configured release workflow.
