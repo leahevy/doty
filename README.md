@@ -17,8 +17,8 @@
 <a href="https://github.com/leahevy/doty/actions/workflows/typechecks.yml"><img src="https://github.com/leahevy/doty/actions/workflows/typechecks.yml/badge.svg" alt="Typechecks"/></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="GPLv3"/></a>
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg" alt="Made with Python"/></a>
-<a href="https://www.linux.org/"><img src="https://svgshare.com/i/Zhy.svg" alt="Running on Linux"/></a>
-<a href="https://www.apple.com/"><img src="https://svgshare.com/i/ZjP.svg" alt="Running on MacOS"/></a>
+<a href="https://www.linux.org/"><img src="https://img.shields.io/badge/OS-Linux-green" alt="Running on Linux"/></a>
+<a href="https://www.apple.com/"><img src="https://img.shields.io/badge/OS-MacOS-green" alt="Running on MacOS"/></a>
 <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Formatted with black"/></a>
 <a href="https://opensource.fb.com/support-ukraine"><img src="https://img.shields.io/badge/Support-Ukraine-FFD500?style=flat&labelColor=005BBB" alt="Support Ukraine"/></a>
 </p>
