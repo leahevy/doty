@@ -2,10 +2,8 @@ name: Release on Pypi
 
 on:
   push:
-    branches-ignore:
-      - '**'
-#    tags:
-#      - '*'
+    tags:
+      - '*'
   workflow_dispatch: {}
 
 jobs:
