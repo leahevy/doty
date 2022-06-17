@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+v0.3.0 (2022-06-17)
+-------------------
+- Update data from base template. [Leah Lackner]
+- Activate release on pypi workflow. [Leah Lackner]
+
+
 v0.2.0 (2022-06-17)
 -------------------
 - Fix release workflow. [Leah Lackner]
