@@ -18,6 +18,7 @@
 Some description comes here.
 """
 
+import os
 import os.path
 import sys
 from typing import Optional
@@ -30,12 +31,15 @@ if __name__ == "__main__":
     import os as _os
     import sys as _sys
 
-    _sys.path.append(_os.path.join(_os.path.dirname(__file__), ".."))
+    _sys.path.append(_os.path.join(_os.path.dirname(__file__), "..", ".."))
 
 import doty.lib
 from doty.__version__ import __version__
+from doty.cli.crypto import crypto_app
 
-app = typer.Typer()
+DEFAULT_COMMAND = "populate"
+
+app = typer.Typer(context_settings={"help_option_names": ["-h", "--help"]})
 
 
 def version_callback(value: bool) -> None:
@@ -51,25 +55,29 @@ def version_callback(value: bool) -> None:
 
 
 @app.command()
-def lib1() -> None:
+def health() -> None:
     """
-    Calls an example lib function.
+    Checks if everything is set-up correctly and all required programs are available.
     """
-    doty.lib.some_lib_func()
+    print("health")
 
 
 @app.command()
-def lib2() -> None:
-    """
-    Calls another lib function.
-    """
-    doty.lib.other_lib_func()
+def populate(
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
+) -> None:
+    print("populate", dry_run)
 
 
 @app.callback(invoke_without_command=True)
 def main_callback(
     ctx: typer.Context,
-    version: Optional[bool] = typer.Option(
+    version: bool = typer.Option(
         False,
         "-v",
         "--version",
@@ -77,21 +85,21 @@ def main_callback(
         callback=version_callback,
         is_eager=True,
     ),
+    dry_run: bool = typer.Option(
+        False,
+        "-n",
+        "--dry-run",
+        help="Only print the changes. Don't do anything.",
+    ),
 ) -> None:
-    """
-    Doctest test:
-
-    >>> print("True")
-    True
-    """
     if ctx.invoked_subcommand is None:
-        lib1()
+        os.execv(sys.argv[0], [sys.argv[0], populate.__name__] + sys.argv[1:])
+
+
+app.add_typer(crypto_app, name="crypto")
 
 
 def main() -> None:
-    """
-    Runs the main application.
-    """
     app()
 
 

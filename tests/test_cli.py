@@ -18,9 +18,17 @@
 from types import ModuleType
 
 
-def test_doty_lib_some(doty: ModuleType) -> None:
-    doty.lib.some_lib_func()
+class TestMainCli:
+    def test_cli_main_populate(self, doty: ModuleType) -> None:
+        doty.cli.main.populate()
+
+    def test_cli_main_health(self, doty: ModuleType) -> None:
+        doty.cli.main.health()
 
 
-def test_doty_lib_other(doty: ModuleType) -> None:
-    doty.lib.other_lib_func()
+class TestCryptoCli:
+    def test_cli_crypto_file_encrypt(self, doty: ModuleType) -> None:
+        doty.cli.crypto.encrypt()
+
+    def test_cli_crypto_file_decrypt(self, doty: ModuleType) -> None:
+        doty.cli.crypto.decrypt()

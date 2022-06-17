@@ -60,7 +60,7 @@ setup_info = dict(
     ],
     zip_safe=True,
     entry_points={
-        "console_scripts": ["doty=doty.cli:main"],
+        "console_scripts": ["doty=doty.cli.main:main"],
     },
     package_dir={"": "."},
     packages=find_packages(where="."),
