@@ -24,12 +24,11 @@ from rich.text import Text
 
 
 class LogLevel(str, Enum):
-    debug = logging.DEBUG
-    info = logging.INFO
-    warning = logging.WARNING
-    warn = logging.WARNING
-    error = logging.ERROR
-    critical = logging.CRITICAL
+    debug = "debug"
+    info = "info"
+    warning = "warning"
+    error = "error"
+    critical = "critical"
 
 
 class CustomLogHandler(logging.Handler):
