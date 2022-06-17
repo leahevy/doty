@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     _sys.path.append(_os.path.join(_os.path.dirname(__file__), "..", ".."))
 
-import doty.lib
+import doty.lib as lib
 import doty.log as log
 from doty.cli.cli import command, state, update_state, version_callback
 from doty.cli.crypto import crypto_app
@@ -77,12 +77,7 @@ def health(
     """
     Checks if everything is set-up correctly and all required programs are available.
     """
-    options = dict(dry_run=dry_run, log_level=log_level)
-    log.fatal(
-        DotyNotImplementedException,
-        "health not implemented yet",
-        data=options,
-    )
+    lib.health()
 
 
 @command(app)
@@ -113,12 +108,7 @@ def populate(
         help="Prints debug output.",
     ),
 ) -> None:
-    options = dict(dry_run=dry_run, log_level=log_level)
-    log.fatal(
-        DotyNotImplementedException,
-        "populate not implemented yet",
-        data=options,
-    )
+    lib.populate(dry_run)
 
 
 @app.callback(invoke_without_command=True)

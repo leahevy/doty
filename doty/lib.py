@@ -13,18 +13,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from rich import print
+import doty.log as log
+from doty.exceptions import DotyNotImplementedException
 
 
-def some_lib_func() -> None:
-    """
-    Some example lib function.
-    """
-    print("[green]Hello[/green] [yellow]from[/yellow] [red]some lib[/red].")
+def populate(dry_run: bool = False) -> None:
+    log.fatal(
+        DotyNotImplementedException,
+        "populate not implemented yet",
+        data={"dry_run": dry_run},
+    )
 
 
-def other_lib_func() -> None:
-    """
-    Some other lib function.
-    """
-    print("[green]Hello[/green] [yellow]from[/yellow] [red]other lib[/red].")
+def health() -> None:
+    log.fatal(DotyNotImplementedException, "health not implemented yet")
+
+
+def encryptfile(dry_run: bool = False) -> None:
+    log.fatal(
+        DotyNotImplementedException,
+        "encryptfile not implemented yet",
+        data={"dry_run": dry_run},
+    )
+
+
+def decryptfile(dry_run: bool = False) -> None:
+    log.fatal(
+        DotyNotImplementedException,
+        "decryptfile not implemented yet",
+        data={"dry_run": dry_run},
+    )

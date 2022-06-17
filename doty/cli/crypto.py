@@ -21,7 +21,7 @@ import sys
 import typer
 from rich import print
 
-import doty.lib
+import doty.lib as lib
 from doty.cli.cli import command, update_state, version_callback
 from doty.exceptions import DotyNotImplementedException
 from doty.log import LogLevel, fatal
@@ -62,12 +62,7 @@ def encrypt(
     """
     Encrypts a file.
     """
-    options = dict(dry_run=dry_run, log_level=log_level)
-    fatal(
-        DotyNotImplementedException,
-        "encryptfile not implemented yet",
-        data=options,
-    )
+    lib.encryptfile(dry_run=dry_run)
 
 
 @command(file_app)
@@ -101,12 +96,7 @@ def decrypt(
     """
     Decrypts a file.
     """
-    options = dict(dry_run=dry_run, log_level=log_level)
-    fatal(
-        DotyNotImplementedException,
-        "decryptfile not implemented yet",
-        data=options,
-    )
+    lib.decryptfile(dry_run=dry_run)
 
 
 @file_app.callback(invoke_without_command=True)
