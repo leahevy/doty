@@ -47,7 +47,15 @@ def populate(
         preserve_tmp=preserve_tmp,
         key_file=key_file,
     )
+    health_internal(config_file)
     log.fatal(DotyNotImplementedException, "populate not implemented yet")
+
+
+def health_internal(config_file: str | None = None) -> None:
+    try:
+        health(config_file, quiet=True)
+    except Exception:
+        health(config_file, quiet=False)
 
 
 def health(config_file: str | None = None, quiet: bool = False) -> None:
