@@ -1,16 +1,12 @@
 name: Release on Pypi
 
-# Disabled workflow in template. 
-# To enable, exchange the commented blocks.
-# on:
-#   push:
-#     tags:
-#       - '*'
-#   workflow_dispatch: {}
 on:
   push:
     branches-ignore:
       - '**'
+#    tags:
+#      - '*'
+  workflow_dispatch: {}
 
 jobs:
   build-and-publish:
