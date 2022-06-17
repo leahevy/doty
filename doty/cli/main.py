@@ -55,12 +55,6 @@ def health(
         callback=version_callback,
         is_eager=True,
     ),
-    dry_run: bool = typer.Option(
-        False,
-        "-n",
-        "--dry-run",
-        help="Only print the changes. Don't do anything.",
-    ),
     log_level: LogLevel = typer.Option(
         LogLevel.info,
         "--log-level",

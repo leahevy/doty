@@ -24,7 +24,7 @@ from rich import print
 from doty.__version__ import __version__
 from doty.log import LogLevel, set_log_level
 
-state = {
+state: dict[str, Any] = {
     "verbose": False,
     "dry_run": False,
     "log_level": LogLevel.info,
@@ -69,10 +69,13 @@ def command(
                 dry_run=dry_run,
                 log_level=log_level,
             )
+            argsnames = f.__code__.co_varnames
+            if "dry_run" in argsnames:
+                kwargs["dry_run"] = state["dry_run"]
+            if "log_level" in argsnames:
+                kwargs["log_level"] = state["log_level"]
             return f(
                 *args,
-                dry_run=state["dry_run"],
-                log_level=state["log_level"],
                 **kwargs,
             )
 
