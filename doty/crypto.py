@@ -17,18 +17,6 @@ import doty.log as log
 from doty.exceptions import DotyNotImplementedException
 
 
-def populate(dry_run: bool = False) -> None:
-    log.fatal(
-        DotyNotImplementedException,
-        "populate not implemented yet",
-        data={"dry_run": dry_run},
-    )
-
-
-def health() -> None:
-    log.fatal(DotyNotImplementedException, "health not implemented yet")
-
-
 def encryptfiles(*files: str, dry_run: bool = False) -> None:
     log.fatal(
         DotyNotImplementedException,

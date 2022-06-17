@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     _sys.path.append(_os.path.join(_os.path.dirname(__file__), "..", ".."))
 
-import doty.lib as lib
+import doty.core as core
 import doty.log as log
 from doty.cli.cli import command, state, update_state, version_callback
 from doty.cli.crypto import crypto_app
@@ -76,7 +76,7 @@ def health(
     """
     Checks if everything is set-up correctly and all required programs are available.
     """
-    lib.health()
+    core.health()
 
 
 @command(app)
@@ -107,7 +107,7 @@ def populate(
         help="Prints debug output.",
     ),
 ) -> None:
-    lib.populate(dry_run)
+    core.populate(dry_run)
 
 
 @app.callback(invoke_without_command=True)

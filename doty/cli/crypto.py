@@ -20,7 +20,7 @@ import sys
 
 import typer
 
-import doty.lib as lib
+import doty.crypto as crypto
 from doty.cli.cli import command, update_state, version_callback
 from doty.log import LogLevel
 
@@ -61,7 +61,7 @@ def encrypt(
     """
     Encrypts a file.
     """
-    lib.encryptfiles(*files, dry_run=dry_run)
+    crypto.encryptfiles(*files, dry_run=dry_run)
 
 
 @command(file_app)
@@ -96,7 +96,7 @@ def decrypt(
     """
     Decrypts a file.
     """
-    lib.decryptfiles(*files, dry_run=dry_run)
+    crypto.decryptfiles(*files, dry_run=dry_run)
 
 
 @file_app.callback(invoke_without_command=True)
